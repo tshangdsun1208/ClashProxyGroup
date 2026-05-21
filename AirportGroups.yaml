@@ -1,0 +1,696 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+dns:
+    enable: true
+    ipv6: false
+    respect-rules: true
+    default-nameserver: [119.29.29.29, 114.114.114.114]
+    proxy-server-nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query', 'tls://dot.pub']
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    fake-ip-filter: ['*.lan', localhost.ptlogin2.qq.com]
+    use-hosts: true
+    nameserver: ['https://doh.pub/dns-query', 'tls://dot.pub', 'https://223.5.5.5/dns-query', 'https://223.6.6.6/dns-query', 'tls://dns.alidns.com', 'tls://223.5.5.5:853', 'tls://223.6.6.6:853']
+    fallback: ['https://doh.pub/dns-query', 'tls://dot.pub', 'https://223.5.5.5/dns-query', 'https://223.6.6.6/dns-query', 'tls://dns.alidns.com', 'tls://223.5.5.5:853', 'tls://223.6.6.6:853']
+    fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+
+proxy-providers:
+  Provider:
+    url: "example"
+    type: http
+    interval: 3600
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: DIRECT
+
+proxy-groups:
+  - name: 节点选择
+    type: select
+    proxies:
+      - 自动选择
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png'
+  - name: 手动切换
+    type: select
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Static.png?raw=true'
+  - name: 手动切换备用
+    type: select
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Static_1.png?raw=true'
+  - name: 自动选择
+    type: url-test
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Auto.png?raw=true'
+  - name: 故障转移
+    type: fallback
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Blackhole.png?raw=true'
+  - name: 负载均衡
+    type: load-balance
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Available_1.png?raw=true'
+  - name: Telegram
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Telegram.png?raw=true'
+  - name: 下载工具
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Download.png?raw=true'
+  - name: AI
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 故障转移
+      - 负载均衡
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/AI.png?raw=true'
+  - name: 油管视频
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    icon: 'https://github.com/blackmatrix7/ios_rule_script/blob/master/icon/color/youtube.png?raw=true'
+  - name: 奈飞视频
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    filter: '(?i)(NF|奈飞|解锁|Netflix|NETFLIX|Media)'
+    icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Netflix.png'
+  - name: 巴哈姆特
+    type: select
+    proxies:
+      - 香港节点
+      - 台湾节点
+      - 节点选择
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    filter: '(?i)(港|HK|hk|Hong Kong|HongKong|hongkong)|(?i)(台|新北|彰化|TW|Taiwan)'
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Bahamut.png?raw=true'
+  - name: 哔哩哔哩
+    type: select
+    proxies:
+      - 全球直连
+      - 香港节点
+      - 台湾节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/bilibili.png?raw=true'
+  - name: 国外媒体
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/ForeignMedia.png?raw=true'
+  - name: 国内媒体
+    type: select
+    proxies:
+      - DIRECT
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Media.png'
+  - name: 谷歌FCM
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Google.png?raw=true'
+  - name: 微软Bing
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 故障转移
+      - 负载均衡
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Copilot.png?raw=true'
+  - name: 微软云盘
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 故障转移
+      - 负载均衡
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/OneDrive.png?raw=true'
+  - name: 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 故障转移
+      - 负载均衡
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Microsoft.png?raw=true'
+  - name: 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/blackmatrix7/ios_rule_script/blob/master/icon/color/apple.png?raw=true'
+  - name: 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Steam.png?raw=true'
+  - name: 网易音乐
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+    include-all-providers: true
+    filter: '(网易|音乐|解锁|Music|NetEase)'
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Netease_Music.png?raw=true'
+  - name: 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Server.png?raw=true'
+  - name: 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Advertising.png'
+  - name: 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Clubhouse_1.png'
+  - name: AdBlock
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/AdBlack.png'
+  - name: 隐私防护
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Hijacking.png'
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - DIRECT
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 美国节点
+      - 故障转移
+      - 负载均衡
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Final.png?raw=true'
+  - name: 香港节点
+    type: url-test
+    include-all-providers: true
+    filter: '(?i)(港|HK|hk|Hong Kong|HongKong|hongkong)'
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png'
+  - name: 日本节点
+    type: url-test
+    include-all-providers: true
+    filter: '(?i)(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)'
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'
+  - name: 美国节点
+    type: url-test
+    include-all-providers: true
+    filter: '(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)'
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 150
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'
+  - name: 台湾节点
+    type: url-test
+    include-all-providers: true
+    filter: '(?i)(台|新北|彰化|TW|Taiwan)'
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png'
+  - name: 狮城节点
+    type: url-test
+    include-all-providers: true
+    filter: '(?i)(新加坡|城|SG|Singapore)'
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    tolerance: 50
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'
+
+rule-providers:
+  LocalAreaNetwork:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  UnBan:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BanAD:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BanProgramAD:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BanEasyList:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BanEasyListChina:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BanEasyPrivacy:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  GoogleFCM:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  GoogleCN:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  SteamCN:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Download:
+    type: http
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Bing:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  OneDrive:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Microsoft:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Apple:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Telegram:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  OpenAi:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Gemini:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Gemini.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Claude:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Claude.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Qwen:
+    type: http
+    url: "https://raw.githubusercontent.com/tshangdsun1208/ClashProxyGroup/main/Qwen.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Perplexity:
+    type: http
+    url: "https://raw.githubusercontent.com/tshangdsun1208/ClashProxyGroup/main/Perplexity.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  NetEaseMusic:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetEaseMusic.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Epic:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Origin:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Sony:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Steam:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Nintendo:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  YouTube:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Netflix:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Bahamut:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bahamut.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  BilibiliHMT:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/BilibiliHMT.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  Bilibili:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bilibili.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ChinaMedia:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ProxyMedia:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ProxyGFWlist:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ChinaIp:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ChinaDomain:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  ChinaCompanyIp:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+  DownloadACL:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
+
+rules:
+  - RULE-SET,LocalAreaNetwork,全球直连
+  - RULE-SET,UnBan,全球直连
+  - RULE-SET,BanAD,广告拦截
+  - RULE-SET,BanProgramAD,应用净化
+  - RULE-SET,BanEasyList,AdBlock
+  - RULE-SET,BanEasyListChina,AdBlock
+  - RULE-SET,BanEasyPrivacy,隐私防护
+  - RULE-SET,GoogleFCM,谷歌FCM
+  - RULE-SET,GoogleCN,全球直连
+  - RULE-SET,SteamCN,全球直连
+  - RULE-SET,Download,下载工具
+  - RULE-SET,Bing,微软Bing
+  - RULE-SET,OneDrive,微软云盘
+  - RULE-SET,Microsoft,微软服务
+  - RULE-SET,Apple,苹果服务
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,OpenAi,AI
+  - RULE-SET,Gemini,AI
+  - RULE-SET,Claude,AI
+  - RULE-SET,Qwen,AI
+  - RULE-SET,Perplexity,AI
+  - RULE-SET,NetEaseMusic,网易音乐
+  - RULE-SET,Epic,游戏平台
+  - RULE-SET,Origin,游戏平台
+  - RULE-SET,Sony,游戏平台
+  - RULE-SET,Steam,游戏平台
+  - RULE-SET,Nintendo,游戏平台
+  - RULE-SET,YouTube,油管视频
+  - RULE-SET,Netflix,奈飞视频
+  - RULE-SET,Bahamut,巴哈姆特
+  - RULE-SET,BilibiliHMT,哔哩哔哩
+  - RULE-SET,Bilibili,哔哩哔哩
+  - RULE-SET,ChinaMedia,国内媒体
+  - RULE-SET,ProxyMedia,国外媒体
+  - RULE-SET,ProxyGFWlist,节点选择
+  - RULE-SET,ChinaDomain,全球直连
+  - RULE-SET,ChinaCompanyIp,全球直连
+  - RULE-SET,DownloadACL,全球直连
+  # - GEOIP,LAN,LAN
+  - GEOIP,CN,DIRECT
+  - MATCH,漏网之鱼
