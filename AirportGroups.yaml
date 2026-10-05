@@ -7,7 +7,7 @@ external-controller: '127.0.0.1:9090'
 
 proxy-providers:
   Provider:
-    url: "example"
+    url: ""
     type: http
     interval: 3600
     health-check:
@@ -90,7 +90,7 @@ proxy-groups:
       - 手动切换
       - 手动切换备用
     icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Download.png?raw=true'
-  - name: AI
+  - name: ChatGPT
     type: select
     proxies:
       - 节点选择
@@ -106,7 +106,41 @@ proxy-groups:
       - 手动切换备用
       - DIRECT
     include-all-providers: true
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/AI.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/ChatGPT.png'
+  - name: Claude
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 故障转移
+      - 负载均衡
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    icon: 'https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/light/claude-color.png'
+  - name: Gemini
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 故障转移
+      - 负载均衡
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 日本节点
+      - 美国节点
+      - 手动切换
+      - 手动切换备用
+      - DIRECT
+    include-all-providers: true
+    icon: 'https://github.com/lobehub/lobe-icons/blob/master/packages/static-png/light/gemini-color.png'
   - name: 油管视频
     type: select
     proxies:
@@ -254,6 +288,19 @@ proxy-groups:
       - 手动切换
       - 手动切换备用
     icon: 'https://github.com/blackmatrix7/ios_rule_script/blob/master/icon/color/apple.png?raw=true'
+  - name: 谷歌服务
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 美国节点
+      - 香港节点
+      - 台湾节点
+      - 狮城节点
+      - 日本节点
+      - 手动切换
+      - 手动切换备用
+    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Google_Search.png?raw=true'
   - name: 游戏平台
     type: select
     proxies:
@@ -470,6 +517,13 @@ rule-providers:
     format: text
     proxy: DIRECT
     behavior: classical
+  Google:
+    type: http
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Google.list"
+    interval: 600
+    format: text
+    proxy: DIRECT
+    behavior: classical
   Telegram:
     type: http
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list"
@@ -494,20 +548,6 @@ rule-providers:
   Claude:
     type: http
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Claude.list"
-    interval: 600
-    format: text
-    proxy: DIRECT
-    behavior: classical
-  Qwen:
-    type: http
-    url: "https://raw.githubusercontent.com/tshangdsun1208/ClashProxyGroup/main/Qwen.list"
-    interval: 600
-    format: text
-    proxy: DIRECT
-    behavior: classical
-  Perplexity:
-    type: http
-    url: "https://raw.githubusercontent.com/tshangdsun1208/ClashProxyGroup/main/Perplexity.list"
     interval: 600
     format: text
     proxy: DIRECT
@@ -655,12 +695,11 @@ rules:
   - RULE-SET,OneDrive,微软云盘
   - RULE-SET,Microsoft,微软服务
   - RULE-SET,Apple,苹果服务
+  - RULE-SET,Google,谷歌服务
   - RULE-SET,Telegram,Telegram
-  - RULE-SET,OpenAi,AI
-  - RULE-SET,Gemini,AI
-  - RULE-SET,Claude,AI
-  - RULE-SET,Qwen,AI
-  - RULE-SET,Perplexity,AI
+  - RULE-SET,OpenAi,ChatGPT
+  - RULE-SET,Gemini,Gemini
+  - RULE-SET,Claude,Claude
   - RULE-SET,NetEaseMusic,网易音乐
   - RULE-SET,Epic,游戏平台
   - RULE-SET,Origin,游戏平台
