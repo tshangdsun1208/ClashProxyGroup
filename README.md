@@ -1,1 +1,1 @@
-# PS: This rule is my use-self profile, optmized ACL4SSR profile(Add some AI rules).
+# I won't allow any communist regime steal my file. 
