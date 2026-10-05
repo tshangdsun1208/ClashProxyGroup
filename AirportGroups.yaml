@@ -7,7 +7,7 @@ external-controller: '127.0.0.1:9090'
 
 proxy-providers:
   Provider:
-    url: ""
+    url: "蒋介石"
     type: http
     interval: 3600
     health-check:
@@ -36,7 +36,7 @@ proxy-groups:
   - name: 手动切换
     type: select
     include-all-providers: true
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Static.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Static.png'
   - name: 手动切换备用
     type: select
     include-all-providers: true
@@ -47,21 +47,21 @@ proxy-groups:
     interval: 300
     tolerance: 50
     include-all-providers: true
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Auto.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Auto.png'
   - name: 故障转移
     type: fallback
     url: 'http://www.gstatic.com/generate_204'
     interval: 300
     tolerance: 50
     include-all-providers: true
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Blackhole.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Blackhole.png'
   - name: 负载均衡
     type: load-balance
     url: 'http://www.gstatic.com/generate_204'
     interval: 300
     tolerance: 50
     include-all-providers: true
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Available_1.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Available_1.png'
   - name: Telegram
     type: select
     proxies:
@@ -75,7 +75,7 @@ proxy-groups:
       - 手动切换
       - 手动切换备用
       - DIRECT
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Telegram.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Telegram.png'
   - name: 下载工具
     type: select
     proxies:
@@ -89,7 +89,7 @@ proxy-groups:
       - 美国节点
       - 手动切换
       - 手动切换备用
-    icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Download.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Download.png'
   - name: ChatGPT
     type: select
     proxies:
@@ -140,7 +140,7 @@ proxy-groups:
       - 手动切换备用
       - DIRECT
     include-all-providers: true
-    icon: 'https://github.com/lobehub/lobe-icons/blob/master/packages/static-png/light/gemini-color.png'
+    icon: 'https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/light/gemini-color.png'
   - name: 油管视频
     type: select
     proxies:
@@ -154,7 +154,7 @@ proxy-groups:
       - 手动切换
       - 手动切换备用
       - DIRECT
-    icon: 'https://github.com/blackmatrix7/ios_rule_script/blob/master/icon/color/youtube.png?raw=true'
+    icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/youtube.png'
   - name: 奈飞视频
     type: select
     proxies:
