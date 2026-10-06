@@ -291,7 +291,6 @@ proxy-groups:
   - name: 谷歌服务
     type: select
     proxies:
-      - DIRECT
       - 节点选择
       - 美国节点
       - 香港节点
@@ -300,6 +299,7 @@ proxy-groups:
       - 日本节点
       - 手动切换
       - 手动切换备用
+      - DIRECT
     icon: 'https://github.com/Koolson/Qure/blob/master/IconSet/Color/Google_Search.png?raw=true'
   - name: 游戏平台
     type: select
